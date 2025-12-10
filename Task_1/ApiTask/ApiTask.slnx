@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/Src/">
+    <Project Path="ApiTask.Application/ApiTask.Application.csproj" />
+    <Project Path="ApiTask.Common/ApiTask.Common.csproj" />
+    <Project Path="ApiTask.Domain/ApiTask.Domain.csproj" />
+    <Project Path="ApiTask.Infrastructure/ApiTask.Infrastructure.csproj" />
+    <Project Path="ApiTask.WebApi/ApiTask.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/Test/" />
+</Solution>
