@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             x:Class="LottieAnimation.MainPage"
+             BackgroundColor="White">
+
+    <Grid Padding="20" RowDefinitions="*,Auto,Auto,Auto" RowSpacing="20">
+
+        <!-- Animation Container -->
+        <Border Grid.Row="0"
+                BackgroundColor="#FAFAFA"
+                Padding="20"
+                StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="16"/>
+            </Border.StrokeShape>
+
+            <skia:SKLottieView x:Name="lottieAnimation"
+                               Source="your_animation.json"
+                               RepeatCount="-1"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"
+            />
+        </Border>
+
+        <!-- Frame Information -->
+        <Grid Grid.Row="1" 
+              ColumnDefinitions="*,*,*"
+              Margin="0,5,0,0">
+            <Label Grid.Column="0"
+                   x:Name="currentFrameLabel"
+                   Text="Frame: 0/0"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"
+                   FontSize="12"
+                   TextColor="#666666"
+            />
+            
+            <Label Grid.Column="1"
+                   x:Name="totalFrameLabel"
+                   Text="FPS: 30"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="12"
+                   TextColor="#666666"
+            />
+            
+            <Label Grid.Column="2"
+                   x:Name="durationLabel"
+                   Text="Time: 0.00s/0.00s"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center"
+                   FontSize="12"
+                   TextColor="#666666"
+            />
+        </Grid>
+
+        <!-- Playback Control Slider -->
+        <Slider Grid.Row="2"
+                x:Name="playbackSlider"
+                Minimum="0"
+                Maximum="1"
+                Value="0"
+                MinimumTrackColor="#333333"
+                MaximumTrackColor="#E5E5E5"
+                ThumbColor="#333333"
+                Margin="0,5,0,0"
+                ValueChanged="OnPlaybackSliderValueChanged"
+                DragStarted="OnSliderDragStarted"
+                DragCompleted="OnSliderDragCompleted"
+        />
+
+        <!-- Control Buttons -->
+        <HorizontalStackLayout Grid.Row="3"
+                               Spacing="20"
+                               HorizontalOptions="Center"
+                               Margin="0,10,0,0">
+
+            <!-- Play/Pause Button -->
+            <Border BackgroundColor="#F5F5F5"
+                    Padding="0"
+                    StrokeThickness="0">
+                <Border.StrokeShape>
+                    <Ellipse/>
+                </Border.StrokeShape>
+
+                <Button x:Name="playPauseButton"
+                        Clicked="OnPlayPauseClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        ImageSource="play.png"
+                        Padding="12"
+                        CornerRadius="32"
+                />
+            </Border>
+
+            <!-- Loop Button -->
+            <Border x:Name="loopButtonBorder"
+                    BackgroundColor="#F5F5F5"
+                    Padding="0"
+                    IsVisible="False"
+                    StrokeThickness="0">
+                <Border.StrokeShape>
+                    <Ellipse/>
+                </Border.StrokeShape>
+
+                <Button x:Name="loopButton"
+                        Clicked="OnToggleLoopClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        ImageSource="loop.png"
+                        Padding="12"
+                        CornerRadius="32"
+                />
+            </Border>
+
+            <!-- File Select Button -->
+            <Border BackgroundColor="#F5F5F5"
+                    Padding="0"
+                    StrokeThickness="0">
+                <Border.StrokeShape>
+                    <Ellipse/>
+                </Border.StrokeShape>
+
+                <Button Clicked="OnSelectAnimationClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        ImageSource="folder.png"
+                        Padding="12"
+                        CornerRadius="32"
+                />
+            </Border>
+        </HorizontalStackLayout>
+    </Grid>
+
+</ContentPage>
