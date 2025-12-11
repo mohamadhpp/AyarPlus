@@ -20,7 +20,6 @@ namespace ApiTask.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -107,7 +106,7 @@ namespace ApiTask.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Contacts",
+                name: "Contracts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -133,19 +132,19 @@ namespace ApiTask.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                    table.PrimaryKey("PK_Contracts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Contacts_Cities_CityId",
+                        name: "FK_Contracts_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Contacts_Companies_CompanyId",
+                        name: "FK_Contracts_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Contacts_Users_UserId",
+                        name: "FK_Contracts_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -157,18 +156,18 @@ namespace ApiTask.Infrastructure.Migrations
                 column: "ProvinceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contacts_CityId",
-                table: "Contacts",
+                name: "IX_Contracts_CityId",
+                table: "Contracts",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contacts_CompanyId",
-                table: "Contacts",
+                name: "IX_Contracts_CompanyId",
+                table: "Contracts",
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contacts_UserId",
-                table: "Contacts",
+                name: "IX_Contracts_UserId",
+                table: "Contracts",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -181,7 +180,7 @@ namespace ApiTask.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Contacts");
+                name: "Contracts");
 
             migrationBuilder.DropTable(
                 name: "Cities");

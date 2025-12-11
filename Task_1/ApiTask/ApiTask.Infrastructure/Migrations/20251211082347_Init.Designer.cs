@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiTask.Infrastructure.Migrations
 {
     [DbContext(typeof(MSSQLContext))]
-    [Migration("20251210094938_Init")]
+    [Migration("20251211082347_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -46,9 +46,6 @@ namespace ApiTask.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Logo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -61,7 +58,7 @@ namespace ApiTask.Infrastructure.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("ApiTask.Domain.Entities.Contact", b =>
+            modelBuilder.Entity("ApiTask.Domain.Entities.Contract", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -146,7 +143,7 @@ namespace ApiTask.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contracts");
                 });
 
             modelBuilder.Entity("ApiTask.Domain.Entities.Location.City", b =>
@@ -265,7 +262,7 @@ namespace ApiTask.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ApiTask.Domain.Entities.Contact", b =>
+            modelBuilder.Entity("ApiTask.Domain.Entities.Contract", b =>
                 {
                     b.HasOne("ApiTask.Domain.Entities.Location.City", "City")
                         .WithMany()

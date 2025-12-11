@@ -1,0 +1,91 @@
+﻿* {
+    font-family: IRANSansX, sans-serif !important;
+}
+
+html,
+body,
+.modal-ux,
+.auth-container .wrapper .renderedMarkdown 
+{
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.swagger-ui .topbar 
+{
+    flex-direction: row-reverse;
+}
+
+.swagger-ui .opblock-summary-description,
+.swagger-ui .parameter__name,
+.swagger-ui .response-col_status
+{
+    text-align: right;
+}
+
+code,
+pre,
+.swagger-ui .main .link,
+.opblock-tag-section .opblock-tag,
+.operation-tag-content .opblock-summary,
+.swagger-ui .models > div,
+.swagger-ui .scheme-container,
+.swagger-ui .highlight-code,
+.swagger-ui .content-type,
+.swagger-ui .model-example ul,
+.swagger-ui .opblock-section-request-body .opblock-description-wrapper,
+.swagger-ui .model-example .tab,
+.auth-container .wrapper,
+.auth-container h4 {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+.swagger-ui .model-example .model-container,
+.swagger-ui .model-example .model-container .model-box,
+.modal-ux #api_key_value 
+{
+    width: 100%;
+    direction: ltr;
+    text-align: left;
+}
+
+.swagger-ui .main .link
+{
+    display: block !important;
+    width: 100% !important;
+}
+
+.schemes-server-container .servers-title
+{
+    display: block !important;
+    text-align: right !important;
+    width: 100% !important;
+    margin-bottom: 5px;
+}
+
+.schemes-server-container #servers
+{
+    text-align: right !important;
+}
+
+.opblock-body .btn-group
+{
+    gap: 7px;
+}
+
+.swagger-ui [data-param-in="path"] 
+{
+    direction: ltr;
+}
+
+.swagger-ui table.parameters 
+{
+    direction: ltr;
+}
+
+.swagger-ui table.parameters thead th,
+.swagger-ui table.responses-table thead td
+{
+    text-align: right !important;
+}

@@ -43,9 +43,6 @@ namespace ApiTask.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Logo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -58,7 +55,7 @@ namespace ApiTask.Infrastructure.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("ApiTask.Domain.Entities.Contact", b =>
+            modelBuilder.Entity("ApiTask.Domain.Entities.Contract", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -143,7 +140,7 @@ namespace ApiTask.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contracts");
                 });
 
             modelBuilder.Entity("ApiTask.Domain.Entities.Location.City", b =>
@@ -262,7 +259,7 @@ namespace ApiTask.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ApiTask.Domain.Entities.Contact", b =>
+            modelBuilder.Entity("ApiTask.Domain.Entities.Contract", b =>
                 {
                     b.HasOne("ApiTask.Domain.Entities.Location.City", "City")
                         .WithMany()

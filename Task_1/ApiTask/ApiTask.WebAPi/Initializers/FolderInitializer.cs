@@ -10,10 +10,10 @@
                 Directory.CreateDirectory(Constant.DataFolder);
             }
 
-            // Contact folder
-            if (!Directory.Exists(Constant.ContactsFolder))
+            // Contract folder
+            if (!Directory.Exists(Constant.ContractsFolder))
             {
-                Directory.CreateDirectory(Constant.ContactsFolder);
+                Directory.CreateDirectory(Constant.ContractsFolder);
             }
         }
     }

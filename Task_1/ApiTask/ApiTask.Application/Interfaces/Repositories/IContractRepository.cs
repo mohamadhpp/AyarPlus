@@ -3,7 +3,8 @@ using ApiTask.Domain.Entities;
 
 namespace ApiTask.Application.Interfaces.Repositories
 {
-    public interface IContactRepository : IGenericRepository<Contact>
+    public interface IContractRepository : IGenericRepository<Contract>
     {
+        public void Add(ref Contract contract);
     }
 }

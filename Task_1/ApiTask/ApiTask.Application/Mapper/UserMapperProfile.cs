@@ -12,7 +12,8 @@ namespace ApiTask.Application.Mapper
             CreateMap<AddUserDto, User>()
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => SecurityHelper.PBKDF2Hash(src.Password)));
 
-            CreateMap<EditUserDto, User>();
+            CreateMap<EditUserDto, User>()
+                .ForMember(dest => dest.Password, opt => opt.Ignore());
         }
     }
 }

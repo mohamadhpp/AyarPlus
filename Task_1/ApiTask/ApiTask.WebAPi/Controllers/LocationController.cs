@@ -2,10 +2,14 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ApiTask.WebApi.Controllers
 {
+    [ApiController]
     [Route("api/location")]
+    [Produces("application/json")]
+    [SwaggerTag("دسترسی به لیست کشورها، استان‌ها و شهرها")]
     public class LocationController(IMapper mapper,
                                     ILogger<LocationController> logger,
                                     ICountryRepository countryRepository) : Controller(mapper)
@@ -13,8 +17,17 @@ namespace ApiTask.WebApi.Controllers
         private readonly ILogger<LocationController> _logger = logger;
         private readonly ICountryRepository _countryRepository = countryRepository;
 
+        [HttpGet]
         [Route("get")]
-        public async Task<ActionResult> Get()
+        [SwaggerOperation(
+            Summary = "دریافت لیست کشورها با استان‌ها و شهرها",
+            Description = "دریافت لیست تمامی کشورها به همراه استان‌ها و شهرهای مربوط",
+            OperationId = "GetLocations",
+            Tags = new[] { "Location" }
+        )]
+        [SwaggerResponse(200, "لیست موقعیت‌های جغرافیایی با موفقیت دریافت شد")]
+        [SwaggerResponse(500, "خطای سرور")]
+        public async Task<IActionResult> Get()
         {
             try
             {

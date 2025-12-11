@@ -36,6 +36,7 @@ namespace ApiTask.WebApi.Initializers
                         Name = "ایران"
                     };
                     dbContext.Countries.Add(country);
+                    dbContext.SaveChanges();
                 }
 
                 #endregion

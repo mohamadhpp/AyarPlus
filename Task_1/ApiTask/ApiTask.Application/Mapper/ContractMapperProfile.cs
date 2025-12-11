@@ -1,18 +1,18 @@
-﻿using ApiTask.Application.Dtos.ContactDtos;
+﻿using ApiTask.Application.Dtos.ContractDtos;
 using ApiTask.Domain.Entities;
 using AutoMapper;
 
 namespace ApiTask.Application.Mapper
 {
-    public class ContactMapperProfile : Profile
+    public class ContractMapperProfile : Profile
     {
-        public ContactMapperProfile()
+        public ContractMapperProfile()
         {
-            CreateMap<AddContactDto, Contact>()
+            CreateMap<AddContractDto, Contract>()
                 .ForMember(dest => dest.Front, opt => opt.Ignore())
                 .ForMember(dest => dest.Back, opt => opt.Ignore());
 
-            CreateMap<Contact, EditContactDto>()
+            CreateMap<EditContractDto, Contract>()
                 .ForMember(dest => dest.Front, opt => opt.Ignore())
                 .ForMember(dest => dest.Back, opt => opt.Ignore());
         }

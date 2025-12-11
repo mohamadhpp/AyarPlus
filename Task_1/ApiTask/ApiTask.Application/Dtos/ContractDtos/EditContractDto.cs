@@ -3,10 +3,14 @@ using Microsoft.AspNetCore.Http;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace ApiTask.Application.Dtos.ContactDtos
+namespace ApiTask.Application.Dtos.ContractDtos
 {
-    public class AddContactDto
+    public class EditContractDto
     {
+        [DisplayName("شناسه")]
+        [Required(ErrorMessage = "{0} ضروری است!")]
+        public Guid Id { get; set; }
+
         [DisplayName("شناسه شرکت")]
         public long? CompanyId { get; set; }
 
@@ -64,12 +68,12 @@ namespace ApiTask.Application.Dtos.ContactDtos
         [MaxLength(50, ErrorMessage = "{0} نمی‌تواند بیشتر از {1} کاراکتر باشد!")]
         public string? FileNumber { get; set; }
 
-        [DisplayName("تصویر صفحه")]
+        [DisplayName("تصویر جلو")]
         [FileSize(5 * 1024 * 1024, ErrorMessage = "حجم {0} نمی‌تواند بیشتر از 5 مگابایت باشد!")]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png", ".gif" }, ErrorMessage = "فرمت {0} مجاز نیست!")]
         public IFormFile? Front { get; set; }
 
-        [DisplayName("تصویر پشت صفحه")]
+        [DisplayName("تصویر پشت")]
         [FileSize(5 * 1024 * 1024, ErrorMessage = "حجم {0} نمی‌تواند بیشتر از 5 مگابایت باشد!")]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png", ".gif" }, ErrorMessage = "فرمت {0} مجاز نیست!")]
         public IFormFile? Back { get; set; }

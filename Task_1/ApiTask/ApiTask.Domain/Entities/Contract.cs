@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiTask.Domain.Entities
 {
-    public class Contact : Base
+    public class Contract : Base
     {
         public Guid Id { get; set; }
         public long? CompanyId { get; set; }

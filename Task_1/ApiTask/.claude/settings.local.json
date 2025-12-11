@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Stop-Process -Force)",
+      "Bash(dir \"ApiTask.Application\\Dtos\\ContactDtos\")",
+      "Bash(ren:*)",
+      "Bash(dotnet build:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

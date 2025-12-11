@@ -6,6 +6,9 @@ using ApiTask.Infrastructure.Persistence.Repositories;
 using ApiTask.Infrastructure.Persistence.Repositories.LocationRepositories;
 using ApiTask.Infrastructure.Persistence.Repositories.UserRepositories;
 using ApiTask.WebApi.Initializers;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +19,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-#if DEBUG
-    .AddJsonFile("appsettings.development.json", optional: true)
-#else
-    .AddJsonFile("appsettings.production.json", optional: true)
-#endif
     .AddEnvironmentVariables();
 
 var configuration = builder.Configuration;
@@ -36,7 +34,10 @@ FolderInitializer.InitFolders();
 
 #region Database Contexts
 
-builder.Services.AddDbContext<MSSQLContext>();
+builder.Services.AddDbContext<MSSQLContext>(options =>
+{
+    options.UseSqlServer(configuration.GetConnectionString("MSSQLServer"));
+});
 
 builder.Services.AddSingleton<ILoggerFactory>(provider => LoggerFactory.Create(builder =>
 {
@@ -49,7 +50,7 @@ builder.Services.AddSingleton<ILoggerFactory>(provider => LoggerFactory.Create(b
 
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IContractRepository, ContractRepository>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IProvinceRepository, ProvinceRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
@@ -61,7 +62,7 @@ builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<UserMapperProfile>();
-    cfg.AddProfile<ContactMapperProfile>();
+    cfg.AddProfile<ContractMapperProfile>();
     cfg.AddProfile<CompanyMapperProfile>();
 }, typeof(Program).Assembly);
 
@@ -81,8 +82,35 @@ builder.Services.AddCors(options =>
 
 #endregion
 
+#region Swagger
+
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
+    {
+        Title = "رابط برنامه‌نویسی کاربردی ApiTask",
+        Version = "ورژن 1",
+        Description = "API برای مدیریت کاربران، شرکت‌ها، قراردادها",
+        Contact = new Microsoft.OpenApi.OpenApiContact
+        {
+            Name = "ارتباط با سازنده",
+            Email = "mohammad.hoseinpour.078@gmail.com"
+        }
+    });
+
+    c.EnableAnnotations();
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        c.IncludeXmlComments(xmlPath);
+    }
+});
+
+#endregion
 
 #endregion
 
@@ -100,10 +128,27 @@ DataInitializer.LocationData(ref app);
 
 #endregion
 
+#region Swagger
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiTask API v1");
+        c.RoutePrefix = "swagger";
+        c.DocumentTitle = "ApiTask API";
+
+        // Styles
+        c.InjectStylesheet("/fonts/iransans/font.css");
+        c.InjectStylesheet("/plugins/custom/swagger/swagger.css");
+
+        // Scripts
+        c.InjectJavascript("/plugins/custom/swagger/swagger.js");
+    });
 }
+
+#endregion
 
 app.UseCors();
 app.UseHttpsRedirection();
@@ -113,6 +158,24 @@ app.UseAuthorization();
 
 app.UseStaticFiles();
 app.MapControllers();
+
+// Launch Swagger in browser
+if (app.Environment.IsDevelopment())
+{
+    var url = app.Urls.FirstOrDefault() ?? "http://localhost:5045";
+    var swaggerUrl = $"{url}/swagger";
+
+    _ = Task.Run(() =>
+    {
+        Thread.Sleep(1000);
+
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = swaggerUrl,
+            UseShellExecute = true
+        });
+    });
+}
 
 app.Run();
 
