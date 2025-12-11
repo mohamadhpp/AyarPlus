@@ -92,12 +92,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "رابط برنامه‌نویسی کاربردی ApiTask",
         Version = "ورژن 1",
-        Description = "API برای مدیریت کاربران، شرکت‌ها، قراردادها",
-        Contact = new Microsoft.OpenApi.OpenApiContact
-        {
-            Name = "ارتباط با سازنده",
-            Email = "mohammad.hoseinpour.078@gmail.com"
-        }
+        Description = "API برای مدیریت کاربران، شرکت‌ها، قراردادها"
     });
 
     c.EnableAnnotations();
