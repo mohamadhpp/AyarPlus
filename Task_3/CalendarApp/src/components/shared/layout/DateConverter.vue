@@ -8,9 +8,9 @@ const emit = defineEmits(['date-selected'])
 
 const calendarTypes =
 [
-    { type: 'jalali', name: 'Solar' },
-    { type: 'hijri', name: 'Lunar' },
-    { type: 'gregorian', name: 'Gregorian' }
+    { type: 'jalali', name: 'شمسی' },
+    { type: 'hijri', name: 'قمری' },
+    { type: 'gregorian', name: 'میلادی' }
 ];
 
 const jalaliMonths =
@@ -44,9 +44,9 @@ const selectedTypeLabel = computed(() =>
 {
     const labels =
     {
-        jalali: { day: 'Day', month: 'Month', year: 'Year' },
-        hijri: { day: 'Day', month: 'Month', year: 'Year' },
-        gregorian: { day: 'Day', month: 'Month', year: 'Year' }
+        jalali: { day: 'روز', month: 'ماه', year: 'سال' },
+        hijri: { day: 'روز', month: 'ماه', year: 'سال' },
+        gregorian: { day: 'روز', month: 'ماه', year: 'سال' }
     };
 
     return labels[selectedType.value];
@@ -148,21 +148,21 @@ function convertDate()
         [
             {
                 type: 'jalali',
-                name: 'Solar Calendar',
+                name: 'تقویم شمسی',
                 icon: '',
                 date: `${jalaliDate.jDate()} ${jalaliMonths[jalaliDate.jMonth()]} ${jalaliDate.jYear()}`,
                 dayName: dayOfWeek
             },
             {
                 type: 'hijri',
-                name: 'Lunar Calendar',
+                name: 'تقویم قمری',
                 icon: '',
                 date: `${hijriDate.iDate()} ${hijriMonths[hijriDate.iMonth()]} ${hijriDate.iYear()}`,
                 dayName: dayOfWeek
             },
             {
                 type: 'gregorian',
-                name: 'Gregorian Calendar',
+                name: 'تقویم میلادی',
                 icon: '',
                 date: `${gregorianDate.date()} ${gregorianMonths[gregorianDate.month()]} ${gregorianDate.year()}`,
                 dayName: dayOfWeek
@@ -224,14 +224,15 @@ function convertDate()
                     <label class="text-sm font-medium"
                            style="color: var(--text-secondary)"
                     >
-                        {{ selectedTypeLabel.day }}
+                        {{ selectedTypeLabel.year }}
                     </label>
 
                     <input
                         type="number"
-                        v-model.number="day"
-                        :min="1"
-                        :max="31"
+                        v-model.number="year"
+                        :min="1300"
+                        :max="1500"
+                        dir="ltr"
                         @input="convertDate"
                         class="px-4 py-3 border rounded-lg font-inherit text-base transition-all duration-300"
                         style="background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color)"
@@ -263,14 +264,15 @@ function convertDate()
                     <label class="text-sm font-medium"
                            style="color: var(--text-secondary)"
                     >
-                        {{ selectedTypeLabel.year }}
+                        {{ selectedTypeLabel.day }}
                     </label>
 
                     <input
                         type="number"
-                        v-model.number="year"
-                        :min="1300"
-                        :max="1500"
+                        v-model.number="day"
+                        :min="1"
+                        :max="31"
+                        dir="ltr"
                         @input="convertDate"
                         class="px-4 py-3 border rounded-lg font-inherit text-base transition-all duration-300"
                         style="background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color)"
@@ -361,7 +363,6 @@ select:focus
 
 .result-card:hover
 {
-    transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
     border-color: var(--accent-primary);
 }

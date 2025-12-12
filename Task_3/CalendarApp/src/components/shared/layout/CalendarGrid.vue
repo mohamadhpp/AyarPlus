@@ -33,14 +33,16 @@ const englishWeekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 // Persian holidays (sample)
 const persianHolidays = {
-    '1/1': 'نوروز',
-    '1/2': 'نوروز',
-    '1/3': 'نوروز',
-    '1/4': 'نوروز',
+    '1/1':  'عید نوروز',
+    '1/2':  'عید نوروز',
+    '1/3':  'عید نوروز',
+    '1/4':  'عید نوروز',
     '1/12': 'روز جمهوری اسلامی',
     '1/13': 'روز طبیعت',
-    '3/15': 'قیام 15 خرداد',
-    '11/22': 'پیروزی انقلاب اسلامی'
+    '3/14': 'رحلت امام خمینی',
+    '3/15': 'قیام خونین ۱۵ خرداد',
+    '11/22':'پیروزی انقلاب اسلامی',
+    '12/29': 'روز ملی شدن صنعت نفت'
 };
 
 const currentJalaliMonth = ref(moment().jMonth());
@@ -54,7 +56,7 @@ const calendars = computed(() =>
 [
     {
         type: 'jalali',
-        name: 'Solar Calendar',
+        name: 'تقویم شمسی',
         icon: '',
         currentMonth: `${jalaliMonths[currentJalaliMonth.value]} ${currentJalaliYear.value}`,
         weekDays: persianWeekDays,
@@ -62,7 +64,7 @@ const calendars = computed(() =>
     },
     {
         type: 'hijri',
-        name: 'Lunar Calendar',
+        name: 'تقویم قمری',
         icon: '',
         currentMonth: `${hijriMonths[currentHijriMonth.value]} ${currentHijriYear.value}`,
         weekDays: persianWeekDays,
@@ -70,7 +72,7 @@ const calendars = computed(() =>
     },
     {
         type: 'gregorian',
-        name: 'Gregorian Calendar',
+        name: 'تقویم میلادی',
         icon: '',
         currentMonth: `${gregorianMonths[currentGregorianMonth.value]} ${currentGregorianYear.value}`,
         weekDays: englishWeekDays,
@@ -303,7 +305,7 @@ function selectDate(type, day)
                             class="nav-btn"
                     >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
 
@@ -315,7 +317,7 @@ function selectDate(type, day)
                             class="nav-btn"
                     >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
                 </div>
@@ -390,7 +392,6 @@ function selectDate(type, day)
 {
     background: var(--accent-primary);
     color: white;
-    transform: scale(1.1);
 }
 
 .day-cell
@@ -401,7 +402,6 @@ function selectDate(type, day)
 .day-cell:not(.empty):hover
 {
     background: var(--cal-hover);
-    transform: scale(1.05);
     border-color: var(--accent-primary);
 }
 

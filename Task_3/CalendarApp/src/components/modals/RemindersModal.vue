@@ -25,7 +25,7 @@ function addReminder()
 {
     if (!newReminder.value.title || !newReminder.value.date || !newReminder.value.time)
     {
-        alert('Please enter title, date and time');
+        alert('لطفا عنوان، تاریخ و ساعت را وارد کنید.');
         return;
     }
 
@@ -51,7 +51,7 @@ function addReminder()
 
 function deleteReminder(id)
 {
-    if (confirm('Are you sure you want to delete this reminder?'))
+    if (confirm('آیا مطمئن هستید که می‌خواهید این یادآوری را حذف کنید؟'))
     {
         reminderStore.deleteReminder(id);
         reminders.value = reminderStore.reminders;
@@ -69,14 +69,14 @@ function formatDateTime(date, time)
 <template>
 
     <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1000] p-4" style="backdrop-filter: blur(4px)" @click.self="$emit('close')">
-        <div class="glass w-full max-w-[600px] max-h-[90vh] overflow-y-auto rounded-[20px] animate-fade-in">
+        <div class="glass w-full max-w-[600px] max-h-[90vh] overflow-y-auto rounded-[20px] animate-fade-in hide-scrollbar">
             <div class="flex justify-between items-center p-6 border-b" style="border-color: var(--border-color)">
                 <h2 class="flex items-center gap-3 m-0 text-2xl font-bold" style="color: var(--text-primary)">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="color: var(--accent-primary)">
                         <path d="M12.02 2.91C8.71 2.91 6.02 5.6 6.02 8.91V11.8C6.02 12.41 5.76 13.34 5.45 13.86L4.3 15.77C3.59 16.95 4.08 18.26 5.38 18.7C9.69 20.14 14.34 20.14 18.65 18.7C19.86 18.3 20.39 16.87 19.73 15.77L18.58 13.86C18.28 13.34 18.02 12.41 18.02 11.8V8.91C18.02 5.61 15.32 2.91 12.02 2.91Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
                     </svg>
 
-                    Reminders
+                    یادآوری‌ها
                 </h2>
 
                 <button @click="$emit('close')"
@@ -95,20 +95,20 @@ function formatDateTime(date, time)
                     <h3 class="m-0 mb-4 text-lg font-semibold"
                         style="color: var(--text-primary)"
                     >
-                        Add New Reminder
+                        افزودن یادآور جدید
                     </h3>
 
                     <div class="mb-4">
                         <label class="block mb-2 text-sm font-medium"
                                style="color: var(--text-secondary)"
                         >
-                            Title
+                            عنوان
                         </label>
 
                         <input
                             v-model="newReminder.title"
                             type="text"
-                            placeholder="Reminder title..."
+                            placeholder="عنوان"
                             @keyup.enter="addReminder"
                             class="w-full px-4 py-3 border rounded-lg font-inherit transition-all duration-300"
                             style="background: var(--bg-secondary); color: var(--text-primary); border-color: var(--border-color)"
@@ -120,7 +120,7 @@ function formatDateTime(date, time)
                             <label class="block mb-2 text-sm font-medium"
                                    style="color: var(--text-secondary)"
                             >
-                                Date
+                                تاریخ
                             </label>
 
                             <input v-model="newReminder.date"
@@ -134,7 +134,7 @@ function formatDateTime(date, time)
                             <label class="block mb-2 text-sm font-medium"
                                    style="color: var(--text-secondary)"
                             >
-                                Time
+                                ساعت
                             </label>
 
                             <input v-model="newReminder.time"
@@ -149,13 +149,13 @@ function formatDateTime(date, time)
                         <label class="block mb-2 text-sm font-medium"
                                style="color: var(--text-secondary)"
                         >
-                            Description (Optional)
+                            توضیحات (اختیاری)
                         </label>
 
                         <textarea
                             v-model="newReminder.description"
                             rows="3"
-                            placeholder="Description..."
+                            placeholder="توضیحات"
                             class="w-full px-4 py-3 border rounded-lg font-inherit transition-all duration-300"
                             style="background: var(--bg-secondary); color: var(--text-primary); border-color: var(--border-color)"
                         ></textarea>
@@ -168,7 +168,7 @@ function formatDateTime(date, time)
                             <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
 
-                        Add Reminder
+                        افزودن
                     </button>
                 </div>
 
@@ -176,7 +176,7 @@ function formatDateTime(date, time)
                     <h3 class="m-0 mb-4 text-lg font-semibold"
                         style="color: var(--text-primary)"
                     >
-                        Active Reminders
+                        یادآورهای فعال
                     </h3>
                     <div v-if="reminders.length === 0"
                          class="text-center py-12 px-4"
@@ -187,7 +187,7 @@ function formatDateTime(date, time)
                         </svg>
 
                         <p class="m-0">
-                            No reminders yet
+                            یادآوری یافت نشد!
                         </p>
                     </div>
 
@@ -299,7 +299,6 @@ textarea:focus
 .reminder-item:hover
 {
     border-color: var(--accent-primary);
-    transform: translateX(-4px);
 }
 
 .delete-btn
