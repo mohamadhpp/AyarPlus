@@ -1,17 +1,60 @@
 {
-  "name": "CalendarApp",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "nuxt": "^4.2.2",
-    "vue": "^3.5.25",
-    "vue-router": "^4.6.3"
-  }
+    "name": "persian-calendar-app",
+    "version": "1.0.0",
+    "description": "Modern Persian Calendar Desktop App with Jalali, Hijri and Gregorian calendars",
+    "main": "electron/main.js",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+        "electron:build": "vite build && electron-builder",
+        "nuxt:dev": "nuxt dev",
+        "nuxt:build": "nuxt build"
+    },
+    "build": {
+        "appId": "com.ayarplus.calendar",
+        "productName": "Persian Calendar",
+        "directories": {
+            "output": "dist-electron"
+        },
+        "files": [
+            "electron/**/*",
+            "dist/**/*"
+        ],
+        "win": {
+            "target": "nsis",
+            "icon": "public/icon.png"
+        },
+        "mac": {
+            "target": "dmg",
+            "icon": "public/icon.png"
+        },
+        "linux": {
+            "target": "AppImage",
+            "icon": "public/icon.png"
+        }
+    },
+    "dependencies": {
+        "moment-hijri": "^2.30.0",
+        "moment-jalaali": "^0.10.1",
+        "pinia": "^2.2.0",
+        "vue": "^3.5.0"
+    },
+    "devDependencies": {
+        "@tailwindcss/postcss": "^4.1.18",
+        "@vitejs/plugin-vue": "^6.0.2",
+        "autoprefixer": "^10.4.22",
+        "concurrently": "^8.2.0",
+        "electron": "^32.0.0",
+        "electron-builder": "^25.0.0",
+        "nuxt": "^4.2.2",
+        "postcss": "^8.5.6",
+        "tailwindcss": "^4.1.18",
+        "vite": "^6.0.5",
+        "vue-router": "^4.6.3",
+        "wait-on": "^7.2.0"
+    }
 }
