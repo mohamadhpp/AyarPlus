@@ -1,11 +1,11 @@
 <script setup>
 
 import { ref, onMounted, watch } from 'vue'
-import DateConverter from './components/DateConverter.vue'
-import CalendarGrid from './components/CalendarGrid.vue'
-import RemindersModal from './components/RemindersModal.vue'
-import SettingsModal from './components/SettingsModal.vue'
-import NotificationToast from './components/NotificationToast.vue'
+import DateConverter from './components/shared/layout/DateConverter.vue'
+import CalendarGrid from './components/shared/layout/CalendarGrid.vue'
+import RemindersModal from './components/modals/RemindersModal.vue'
+import SettingsModal from './components/modals/SettingsModal.vue'
+import NotificationToast from './components/notification/NotificationToast.vue'
 import { useReminderStore } from './stores/reminderStore.ts'
 import { useKeyboardShortcuts } from './composables/useKeyboardShortcuts.ts'
 
@@ -55,7 +55,7 @@ onMounted(() =>
     // Show welcome notification
     setTimeout(() =>
     {
-        showNotification('Welcome', 'Welcome to Triple Calendar App');
+        showNotification('خوش آمدگویی', 'سلام، به برنامه یادآور خوش اومدید!');
     }, 1000);
 })
 
@@ -123,12 +123,13 @@ function showNotification(title, message)
 </script>
 
 <template>
-    <div class="min-h-screen transition-colors duration-300"
+
+    <div class="min-h-screen transition-colors duration-300 py-7 px-10"
          :data-theme="theme"
          style="background: var(--bg-primary)"
     >
         <!-- Header -->
-        <header class="glass sticky top-0 z-[100] px-8 py-4 mb-8">
+        <header class="glass sticky top-5 z-[100] px-8 py-4">
             <div class="flex justify-between items-center max-w-[1400px] mx-auto">
                 <div class="flex items-center gap-4">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: var(--accent-primary)">
@@ -137,14 +138,14 @@ function showNotification(title, message)
                     </svg>
 
                     <h1 class="text-gradient text-2xl font-bold m-0">
-                        Triple Calendar
+                        تقویم
                     </h1>
                 </div>
 
                 <div class="flex gap-3 items-center">
                     <button @click="openReminders"
                             class="icon-btn"
-                            title="Reminders"
+                            title="یادآور"
                     >
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M12.02 2.91C8.71 2.91 6.02 5.6 6.02 8.91V11.8C6.02 12.41 5.76 13.34 5.45 13.86L4.3 15.77C3.59 16.95 4.08 18.26 5.38 18.7C9.69 20.14 14.34 20.14 18.65 18.7C19.86 18.3 20.39 16.87 19.73 15.77L18.58 13.86C18.28 13.34 18.02 12.41 18.02 11.8V8.91C18.02 5.61 15.32 2.91 12.02 2.91Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
@@ -160,7 +161,7 @@ function showNotification(title, message)
 
                     <button @click="openSettings"
                             class="icon-btn"
-                            title="Settings"
+                            title="تنظیمات"
                     >
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -171,7 +172,7 @@ function showNotification(title, message)
                     <button @click="toggleTheme"
                             class="relative w-11 h-11 border-none rounded-xl text-white cursor-pointer flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5 hover:rotate-[15deg]"
                             style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))"
-                            title="Toggle Theme"
+                            title="تغییر ‌زمینه"
                     >
                         <svg v-if="theme === 'light'" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M21.5287 15.9294C21.3687 15.6594 20.9187 15.2394 19.7987 15.4394C19.1787 15.5494 18.5487 15.5994 17.9187 15.5694C15.5887 15.4694 13.4787 14.3994 12.0087 12.7494C10.7087 11.2994 9.90873 9.40938 9.89873 7.36938C9.89873 6.22938 10.1287 5.12938 10.5787 4.08938C11.0087 3.08938 10.7087 2.54938 10.4787 2.28938C10.2487 2.03938 9.65873 1.65938 8.53873 2.11938C4.85873 3.70938 2.29873 7.34938 2.29873 11.5894C2.29873 17.1794 6.67873 21.6694 12.1887 21.6694C15.5887 21.6694 18.6487 19.9594 20.4787 17.2194C21.0787 16.3194 21.6887 16.1994 21.5287 15.9294Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -187,12 +188,12 @@ function showNotification(title, message)
         </header>
 
         <!-- Main Content -->
-        <main class="max-w-[1400px] mx-auto px-8 pb-8">
+        <main class="w-full mx-auto pb-8 pt-10">
             <!-- Date Converter Section -->
-            <section class="mb-8 animate-fade-in">
+            <section class="mb-8">
                 <div class="card glass">
                     <h2 class="text-xl font-semibold mb-6" style="color: var(--text-primary)">
-                        Date Converter
+                        تبدیل تاریخ
                     </h2>
 
                     <DateConverter @date-selected="handleDateSelected" />
@@ -247,7 +248,6 @@ function showNotification(title, message)
 .icon-btn:hover
 {
     background: var(--bg-tertiary);
-    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 

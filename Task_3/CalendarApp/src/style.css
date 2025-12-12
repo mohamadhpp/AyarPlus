@@ -170,7 +170,6 @@
 
     .card:hover
     {
-        @apply -translate-y-1;
         box-shadow: var(--shadow-lg);
     }
 }
@@ -198,6 +197,17 @@
     ::-webkit-scrollbar-thumb:hover
     {
         background: var(--accent-secondary);
+    }
+
+    .hide-scrollbar::-webkit-scrollbar
+    {
+        display: none;
+    }
+
+    .hide-scrollbar
+    {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 
     /* Input styles */

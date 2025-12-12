@@ -1,7 +1,7 @@
 <script setup>
 
 import { ref, onMounted } from 'vue'
-import { useReminderStore } from '../stores/reminderStore.ts'
+import { useReminderStore } from '../../stores/reminderStore.ts'
 import moment from 'moment-jalaali'
 
 const emit = defineEmits(['close']);
