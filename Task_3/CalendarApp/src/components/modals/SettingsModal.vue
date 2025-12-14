@@ -36,7 +36,7 @@ function saveSettings()
 
 <template>
 
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1000] p-4"
+    <div class="fixed inset-0 bg-opacity-75 flex items-center justify-center z-[1000] p-4"
          style="backdrop-filter: blur(4px)"
          @click.self="$emit('close')"
     >

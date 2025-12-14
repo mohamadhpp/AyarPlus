@@ -1,13 +1,16 @@
 <script setup>
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useReminderStore } from '../../stores/reminderStore.ts'
 import moment from 'moment-jalaali'
+import ConfirmModal from './ConfirmModal.vue'
 
 const emit = defineEmits(['close']);
 
 const reminderStore = useReminderStore();
-const reminders = ref([]);
+
+// Use computed instead of ref to ensure reactivity
+const reminders = computed(() => reminderStore.reminders.filter(r => !r.notified));
 
 const newReminder = ref({
     title: '',
@@ -16,16 +19,21 @@ const newReminder = ref({
     time: '12:00'
 });
 
+const showDeleteConfirm = ref(false);
+const reminderToDelete = ref(null);
+
 onMounted(() =>
 {
-    reminders.value = reminderStore.reminders;
+    // Load reminders when modal opens
+    reminderStore.loadReminders();
 })
 
 function addReminder()
 {
     if (!newReminder.value.title || !newReminder.value.date || !newReminder.value.time)
     {
-        alert('لطفا عنوان، تاریخ و ساعت را وارد کنید.');
+        // Don't use alert - just return without showing message
+        // The browser validation should handle this
         return;
     }
 
@@ -46,16 +54,30 @@ function addReminder()
         time: '12:00'
     };
 
-    reminders.value = reminderStore.reminders;
+    // reminders will update automatically via computed property
 }
 
 function deleteReminder(id)
 {
-    if (confirm('آیا مطمئن هستید که می‌خواهید این یادآوری را حذف کنید؟'))
+    reminderToDelete.value = id;
+    showDeleteConfirm.value = true;
+}
+
+function confirmDelete()
+{
+    if (reminderToDelete.value)
     {
-        reminderStore.deleteReminder(id);
-        reminders.value = reminderStore.reminders;
+        reminderStore.deleteReminder(reminderToDelete.value);
+        // reminders will update automatically via computed property
     }
+    showDeleteConfirm.value = false;
+    reminderToDelete.value = null;
+}
+
+function cancelDelete()
+{
+    showDeleteConfirm.value = false;
+    reminderToDelete.value = null;
 }
 
 function formatDateTime(date, time)
@@ -68,7 +90,7 @@ function formatDateTime(date, time)
 
 <template>
 
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1000] p-4" style="backdrop-filter: blur(4px)" @click.self="$emit('close')">
+    <div class="fixed inset-0 bg-opacity-75 flex items-center justify-center z-[1000] p-4" style="backdrop-filter: blur(4px)" @click.self="$emit('close')">
         <div class="glass w-full max-w-[600px] max-h-[90vh] overflow-y-auto rounded-[20px] animate-fade-in hide-scrollbar">
             <div class="flex justify-between items-center p-6 border-b" style="border-color: var(--border-color)">
                 <h2 class="flex items-center gap-3 m-0 text-2xl font-bold" style="color: var(--text-primary)">
@@ -109,6 +131,7 @@ function formatDateTime(date, time)
                             v-model="newReminder.title"
                             type="text"
                             placeholder="عنوان"
+                            required
                             @keyup.enter="addReminder"
                             class="w-full px-4 py-3 border rounded-lg font-inherit transition-all duration-300"
                             style="background: var(--bg-secondary); color: var(--text-primary); border-color: var(--border-color)"
@@ -248,6 +271,18 @@ function formatDateTime(date, time)
                 </div>
             </div>
         </div>
+
+        <!-- Delete Confirmation Modal -->
+        <ConfirmModal
+            v-if="showDeleteConfirm"
+            title="تایید حذف"
+            message="آیا مطمئن هستید که می‌خواهید این یادآوری را حذف کنید؟"
+            confirm-text="حذف"
+            cancel-text="انصراف"
+            confirm-type="danger"
+            @confirm="confirmDelete"
+            @cancel="cancelDelete"
+        />
     </div>
 
 </template>

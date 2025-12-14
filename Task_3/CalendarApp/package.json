@@ -2,15 +2,16 @@
     "name": "persian-calendar-app",
     "version": "1.0.0",
     "description": "Modern Persian Calendar Desktop App with Jalali, Hijri and Gregorian calendars",
-    "main": "electron/main.js",
+    "main": "electron-dist/main.js",
     "type": "module",
     "private": true,
     "scripts": {
         "dev": "vite",
         "build": "vite build",
         "preview": "vite preview",
-        "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
-        "electron:build": "vite build && electron-builder",
+        "electron:compile": "tsc -p tsconfig.electron.json",
+        "electron:dev": "npm run electron:compile && concurrently \"vite\" \"wait-on http://localhost:5174 && electron .\"",
+        "electron:build": "npm run electron:compile && vite build && electron-builder",
         "nuxt:dev": "nuxt dev",
         "nuxt:build": "nuxt build"
     },
@@ -18,11 +19,12 @@
         "appId": "com.ayarplus.calendar",
         "productName": "Persian Calendar",
         "directories": {
-            "output": "dist-electron"
+            "output": "electron-dist"
         },
         "files": [
-            "electron/**/*",
-            "dist/**/*"
+            "electron-dist/**/*",
+            "dist/**/*",
+            "public/**/*"
         ],
         "win": {
             "target": "nsis",
@@ -45,6 +47,7 @@
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.1.18",
+        "@types/node": "^25.0.2",
         "@vitejs/plugin-vue": "^6.0.2",
         "autoprefixer": "^10.4.22",
         "concurrently": "^8.2.0",
@@ -53,6 +56,8 @@
         "nuxt": "^4.2.2",
         "postcss": "^8.5.6",
         "tailwindcss": "^4.1.18",
+        "tsx": "^4.21.0",
+        "typescript": "^5.9.3",
         "vite": "^6.0.5",
         "vue-router": "^4.6.3",
         "wait-on": "^7.2.0"

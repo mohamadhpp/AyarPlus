@@ -11,6 +11,7 @@ import { useKeyboardShortcuts } from './composables/useKeyboardShortcuts.ts'
 
 const reminderStore = useReminderStore();
 const reminders = ref([]);
+const upcomingReminders = ref([]);
 
 const selectedDate = ref(null);
 const showReminders = ref(false);
@@ -42,15 +43,24 @@ onMounted(() =>
     // Load reminders
     reminderStore.loadReminders();
     reminders.value = reminderStore.reminders;
+    upcomingReminders.value = reminderStore.getUpcomingReminders();
 
-    // Check for due reminders every minute
-    setInterval(() =>
+    // Function to check reminders
+    const checkReminders = () =>
     {
         reminderStore.checkDueReminders((reminder) =>
         {
-            showNotification('Reminder', reminder.title);
+            showNotification('یادآوری', reminder.title + (reminder.description ? `: ${reminder.description}` : ''));
+            // Update upcoming reminders after notification
+            upcomingReminders.value = reminderStore.getUpcomingReminders();
         });
-    }, 60000);
+    };
+
+    // Check immediately on load
+    checkReminders();
+
+    // Check for due reminders every 30 seconds
+    setInterval(checkReminders, 30000);
 
     // Show welcome notification
     setTimeout(() =>
@@ -61,7 +71,8 @@ onMounted(() =>
 
 watch(() => reminderStore.reminders, (newReminders) =>
 {
-    reminders.value = newReminders
+    reminders.value = newReminders;
+    upcomingReminders.value = reminderStore.getUpcomingReminders();
 }, { deep: true });
 
 function toggleTheme()
@@ -153,9 +164,9 @@ function showNotification(title, message)
                             <path d="M15.02 19.06C15.02 20.71 13.67 22.06 12.02 22.06C11.2 22.06 10.44 21.72 9.90002 21.18C9.36002 20.64 9.02002 19.88 9.02002 19.06" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/>
                         </svg>
 
-                        <span v-if="reminders.length > 0"
+                        <span v-if="upcomingReminders.length > 0"
                               class="absolute -top-1 -right-1 bg-gradient-to-br from-red-400 to-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-[10px] min-w-[20px] text-center">
-                            {{ reminders.length }}
+                            {{ upcomingReminders.length }}
                         </span>
                     </button>
 
@@ -210,6 +221,7 @@ function showNotification(title, message)
 
         <!-- Modals -->
         <RemindersModal v-if="showReminders"
+                        :key="showReminders ? 'open' : 'closed'"
                         @close="showReminders = false"
         />
 

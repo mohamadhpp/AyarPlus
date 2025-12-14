@@ -16,11 +16,13 @@ function createWindow()
         minHeight: 600,
         frame: true,
         backgroundColor: '#1a1a2e',
+        autoHideMenuBar: true,
         webPreferences:
         {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
+            devTools: true
         },
         icon: path.join(__dirname, '../public/icon.png'),
     })
@@ -28,7 +30,7 @@ function createWindow()
     // Load the app
     if (process.env.NODE_ENV === 'development' || !app.isPackaged)
     {
-        mainWindow.loadURL('http://localhost:5173');
+        mainWindow.loadURL('http://localhost:5174');
         mainWindow.webContents.openDevTools();
     }
     else
